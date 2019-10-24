@@ -98,7 +98,7 @@ def replace_links(data):
     return data
 
 
-def main(src, dst, force):
+def _main(src, dst, force):
     """ Core function. """
     basedir = _os.path.dirname(_os.path.abspath(__file__))
     patch = _os.path.join(basedir, "patch.json.gz")
@@ -141,4 +141,4 @@ def main(src, dst, force):
 
 
 if __name__ == "__main__":
-    main(**vars(_read_args()))
+    _main(**vars(_read_args()))
