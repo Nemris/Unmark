@@ -7,6 +7,32 @@ import re as _re
 import sys as _sys
 
 
+def _read_args():
+    """ Parse command-line args. """
+    ap = _argparse.ArgumentParser( # pylint: disable=invalid-name
+        description="Create an user manual from GodMode9's README.md file."
+    )
+
+    ap.add_argument(
+        "src",
+        type=str,
+        help="the original README.md file"
+    )
+    ap.add_argument(
+        "dst",
+        type=str,
+        help="the user manual"
+    )
+    ap.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="overwrite the output file, if present"
+    )
+
+    return ap.parse_args()
+
+
 def _exit_fatal(msg):
     """ Print an error message to stderr and exit. """
     print("Fatal: {0}".format(msg), file=_sys.stderr)
@@ -115,28 +141,4 @@ def main(src, dst, force):
 
 
 if __name__ == "__main__":
-    AP = _argparse.ArgumentParser(
-        description="Create an user manual from GodMode9's README.md file."
-    )
-
-    AP.add_argument(
-        "src",
-        type=str,
-        help="the original README.md file"
-    )
-    AP.add_argument(
-        "dst",
-        type=str,
-        help="the user manual"
-    )
-    AP.add_argument(
-        "-f",
-        "--force",
-        default=False,
-        action="store_true",
-        help="overwrite the output file, if present"
-    )
-
-    ARGS = AP.parse_args()
-
-    main(ARGS.src, ARGS.dst, ARGS.force)
+    main(**vars(_read_args()))
